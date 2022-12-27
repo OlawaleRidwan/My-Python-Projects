@@ -22,12 +22,12 @@ def singleline_diff(line1, line2):
     if(len(line1) >= len(line2)):
         longer_line = line1 # Length of the longer of the two lists
         shorter_line = line2 # Length of the shorter of the two lists
-        length1 = len(longer_line)
+        #length1 = len(longer_line)
         length2 = len(shorter_line)
     else :
         longer_line = line2
         shorter_line = line1
-        length1 = len(longer_line)
+        #length1 = len(longer_line)
         length2 = len(shorter_line)
 
     if (longer_line == shorter_line):
@@ -59,32 +59,12 @@ def singleline_diff_format(line1, line2, idx):
       If idx is not a valid index, then returns an empty string.
     """
 
-    if(len(line1) >= len(line2)):
-        longer_line = line1 # Length of the longer of the two liness
-        shorter_line = line2 # Length of the shorter of the two lists
-        length1 = len(longer_line)
-        length2 = len(shorter_line)
-    else :
-        longer_line = line2
-        shorter_line = line1
-        length1 = len(longer_line)
-        length2 = len(shorter_line)
-
-    if(("\n" in line1 or "\r" in line1) or ("\n" in line2 or "\r" in line2)  or idx > length2):
+    least_len = min(len(line1), len(line2))
+    if(("\n" in line1 or "\r" in line1) or ("\n" in line2 or "\r" in line2)  or not(0 <= idx <= least_len)):
         return ""
-    else:
-        
-        print(longer_line)
-        for char in range(idx+1):
-            if (char < idx):
-                print("=",end="")
-            else:
-                print("^")
-        print(shorter_line)
-
-#singleline_diff_format("Olawale\n","Olawan",5)
-
-
+    else:    
+        return line1 + "\n" + "=" * idx + "^\n" + line2 + "\n"
+    
 
 def multiline_diff(lines1, lines2):
     """
@@ -101,12 +81,12 @@ def multiline_diff(lines1, lines2):
     if(len(lines1) >= len(lines2)):
         longer_list = lines1
         shorter_list = lines2
-        length1 = len(longer_list)
+        #length1 = len(longer_list)
         length2 = len(shorter_list)
     else :
         longer_list = lines2 
         shorter_list = lines1
-        length1 = len(longer_list) # Length of the longer of the two lists
+        #length1 = len(longer_list) # Length of the longer of the two lists
         length2 = len(shorter_list) # Length of the shorter of the two list
 
     if (longer_list == shorter_list):
@@ -120,7 +100,7 @@ def multiline_diff(lines1, lines2):
                 return (line, char_index)
 
 
-print(multiline_diff(["Olawale","Ridwan","Baseeroh","Shamsudeen",], ["Olawale","Ridwan","Baseeroh","Shamsudeen","Raheemah"]))
+#print(multiline_diff(["Olawale","Ridwan","Baseeroh","Shamsudeen",], ["Olawale","Ridwan","Baseeroh","Shamsudeen","Raheemah"]))
 
 
 def get_file_lines(filename):
@@ -156,10 +136,11 @@ def get_file_lines(filename):
             new_line = line.replace("\r","")
             file_lines.append(new_line)
         else: 
-             file_lines.append(line)
-             
+            file_lines.append(line)
+
+    openfile.close()         
     return file_lines
-    openfile.close()
+   
 
 #print(get_file_lines(r"C:\Users\HP\Desktop\myPythonCodes\newsample.txt"))
 
@@ -181,13 +162,13 @@ def file_diff_format(filename1, filename2):
     file1_list = get_file_lines(filename1)
     file2_list = get_file_lines(filename2)
 
-    tuple = multiline_diff(file1_list, file2_list)
+    tup = multiline_diff(file1_list, file2_list)
     #The above line is a tuple showing the line and index where the difference occur
-    if tuple == (IDENTICAL,IDENTICAL):
+    if tup == (IDENTICAL,IDENTICAL):
         return "No diffrences\n"
     else:
-        print("Line " + str(tuple[0]))
-        first_files_diff = singleline_diff_format(file1_list[tuple[0]], file2_list[tuple[0]], tuple[1])
+        print("Line " + str(tup[0]))
+        first_files_diff = singleline_diff_format(file1_list[tup[0]], file2_list[tup[0]], tup[1])
         return first_files_diff
     
-print(file_diff_format(r"C:\Users\HP\Desktop\myPythonCodes\newsample.txt", r"C:\Users\HP\Desktop\myPythonCodes\secondfile.txt"))
+# print(file_diff_format(r"C:\Users\HP\Desktop\myPythonCodes\newsample.txt", r"C:\Users\HP\Desktop\myPythonCodes\secondfile.txt"))

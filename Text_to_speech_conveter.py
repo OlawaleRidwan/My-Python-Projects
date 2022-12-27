@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import *
-from tkinter import filedialog
 from tkinter.ttk import Combobox
 import pyttsx3
 import os
@@ -21,25 +20,25 @@ def speaknow():
     gender = gender_box.get()
     speed = speed_box.get()
     voices = tts.getProperty('voices')
-
-    if (gender=='Male'):
-        tts.setProperty('voice',voices[0].id)
-        tts.say(text)
-        tts.runAndWait()
-    else:
-        tts.setProperty('voice',voices[1].id)
-        tts.say(text)
-        tts.runAndWait()
-    if(text):
-        if(speed=='Fast'):
-            tts.setProperty('rate',250)
-            setvoice()
-        elif(speed == 'Medium'):
-            tts.setProperty('rate',150)
-            setvoice()
+    def setvoice():
+        if (gender=='Male'):
+            tts.setProperty('voice',voices[0].id)
+            tts.say(text)
+            tts.runAndWait()
         else:
-            tts.setProperty('rate',60)
-            setvoice()
+            tts.setProperty('voice',voices[1].id)
+            tts.say(text)
+            tts.runAndWait()
+    if(text):
+            if(speed=='Fast'):
+                tts.setProperty('rate',250)
+                setvoice()
+            elif(speed == 'Medium'):
+                tts.setProperty('rate',150)
+                setvoice()
+            else:
+                tts.setProperty('rate',60)
+                setvoice()
 
     
 

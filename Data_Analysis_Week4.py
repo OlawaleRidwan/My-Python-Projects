@@ -5,8 +5,8 @@ Processing CSV files with baseball stastics.
 Be sure to read the project description page for further information
 about the expected behavior of the program.
 """
-
 import csv
+
 
 ##
 ## Provided code from Week 3 Project
@@ -23,16 +23,13 @@ def read_csv_as_list_dict(filename, separator, quote):
       corresponds to a row in the CSV file.  The dictionaries in the
       list map the field names to the field values for that row.
     """
+    
     table = []
     with open(filename, newline='') as csvfile:
         csvreader = csv.DictReader(csvfile, delimiter=separator, quotechar=quote)
         for row in csvreader:
             table.append(row)
     return table
-
-table_readed_file = read_csv_as_list_dict(r"C:\Users\HP\Desktop\sample1.csv", ",", '"')
-
-print(table_readed_file)
 
 
 def read_csv_as_nested_dict(filename, keyfield, separator, quote):
@@ -112,30 +109,9 @@ def slugging_percentage(info, batting_stats):
 
 
 
-
-baseballdatainfo = {
-        "masterfile": "Master_2016.csv",   # Name of Master CSV file
-        "battingfile": "Batting_2016.csv", # Name of Batting CSV file
-        "separator": ",",                  # Separator character in CSV files
-        "quote": '"',                      # Quote character in CSV files
-        "playerid": "playerID",            # Player ID field name
-        "firstname": "nameFirst",          # First name field name
-        "lastname": "nameLast",            # Last name field name
-        "yearid": "yearID",                # Year field name
-        "atbats": "AB",                    # At bats field name
-        "hits": "H",                       # Hits field name
-        "doubles": "2B",                   # Doubles field name
-        "triples": "3B",                   # Triples field name
-        "homeruns": "HR",                  # Home runs field name
-        "walks": "BB",                     # Walks field name
-        "battingfields": ["AB", "H", "2B", "3B", "HR", "BB"]
-    }
-
 ##
 ## Part 1: Functions to compute top batting statistics by year
 ##
-
-
 
 
 def filter_by_year(statistics, year, yearid):
@@ -151,9 +127,6 @@ def filter_by_year(statistics, year, yearid):
     
     new_statistics = list(filter(lambda stat: int(stat[yearid]) == year   , statistics))
     return new_statistics
-
-#print("")
-#print(filter_by_year(table_writed_file,62, "Jan"))
 
 
 def top_player_ids(info, statistics, formula, numplayers):
@@ -171,8 +144,9 @@ def top_player_ids(info, statistics, formula, numplayers):
       decreasing order of the computed statistic.
     """
 
-    player_id_list = list(map(lambda stats:stats[info['playerid']]  ), statistics)
+    player_id_list = list(map(lambda stats: stats[info['playerid']], statistics))
     comp_stat_list = list(map(lambda stats: formula(info, stats), statistics))
+    
     
     #create list of tuples
     tups = list(map(lambda player_id,comp_stat: (player_id,comp_stat), player_id_list, comp_stat_list))
@@ -181,28 +155,7 @@ def top_player_ids(info, statistics, formula, numplayers):
     tups.sort(key = lambda pair: pair[1], reverse=True)
 
     #sorted lists in descending order of the of number of top players
-    final_tups = tups[:numplayers]
-
-
-top_player_ids({'masterfile': '', 'battingfile': '', 'separator': ',', 'quote': '"', 
-'playerid': 'player', 'firstname': 'firstname', 'lastname': 'lastname', 'yearid': 'year', 
-'atbats': 'atbats', 'hits': 'hits', 'doubles': 'doubles', 'triples': 'triples', 'homeruns': 'homers', 'walks': 'walks', 
-'battingfields': ['atbats', 'hits', 'doubles', 'triples', 'homers', 'walks']}, [{'hits': '108', 'year': '2020', 'homers': '5', 'player': 'player0', 'atbats': '300', 'doubles': '20', 'walks': '25', 'triples': '1'},
-{'hits': '170', 'year': '2020', 'homers': '4', 'player': 'player1', 'atbats': '499', 'doubles': '5', 'walks': '10', 'triples': '3'},
-{'hits': '129', 'year': '2020', 'homers': '20', 'player': 'player2', 'atbats': '513', 'doubles': '18', 'walks': '85', 'triples': '5'},
-{'hits': '67', 'year': '2020', 'homers': '22', 'player': 'player5', 'atbats': '197', 'doubles': '3', 'walks': '37', 'triples': '2'},
-{'hits': '166', 'year': '2020', 'homers': '18', 'player': 'player6', 'atbats': '542', 'doubles': '33', 'walks': '25', 'triples': '7'},
-{'hits': '161', 'year': '2020', 'homers': '10', 'player': 'player7', 'atbats': '500', 'doubles': '19', 'walks': '27', 'triples': '2'},
-{'hits': '176', 'year': '2020', 'homers': '25', 'player': 'player8', 'atbats': '589', 'doubles': '42', 'walks': '30', 'triples': '13'}], batting_average({'masterfile': '', 'battingfile': '', 'separator': ',', 'quote': '"', 
-'playerid': 'player', 'firstname': 'firstname', 'lastname': 'lastname', 'yearid': 'year', 
-'atbats': 'atbats', 'hits': 'hits', 'doubles': 'doubles', 'triples': 'triples', 'homeruns': 'homers', 'walks': 'walks', 
-'battingfields': ['atbats', 'hits', 'doubles', 'triples', 'homers', 'walks']}, [{'hits': '108', 'year': '2020', 'homers': '5', 'player': 'player0', 'atbats': '300', 'doubles': '20', 'walks': '25', 'triples': '1'},
-{'hits': '170', 'year': '2020', 'homers': '4', 'player': 'player1', 'atbats': '499', 'doubles': '5', 'walks': '10', 'triples': '3'},
-{'hits': '129', 'year': '2020', 'homers': '20', 'player': 'player2', 'atbats': '513', 'doubles': '18', 'walks': '85', 'triples': '5'},
-{'hits': '67', 'year': '2020', 'homers': '22', 'player': 'player5', 'atbats': '197', 'doubles': '3', 'walks': '37', 'triples': '2'},
-{'hits': '166', 'year': '2020', 'homers': '18', 'player': 'player6', 'atbats': '542', 'doubles': '33', 'walks': '25', 'triples': '7'},
-{'hits': '161', 'year': '2020', 'homers': '10', 'player': 'player7', 'atbats': '500', 'doubles': '19', 'walks': '27', 'triples': '2'},
-{'hits': '176', 'year': '2020', 'homers': '25', 'player': 'player8', 'atbats': '589', 'doubles': '42', 'walks': '30', 'triples': '13'}]), 4)
+    return tups[:numplayers]
 
 
 def lookup_player_names(info, top_ids_and_stats):
@@ -218,8 +171,22 @@ def lookup_player_names(info, top_ids_and_stats):
       the input and "FirstName LastName" is the name of the player
       corresponding to the player ID in the input.
     """
-    return []
+    list_of_strings = []
+    connecter = "---"
 
+    master_dict = read_csv_as_nested_dict(
+        info["masterfile"], info["playerid"], info["separator"], info["quote"])
+
+    for item in top_ids_and_stats:
+        computed_statistics = item[1]
+        first_name = master_dict[item[0]][info["firstname"]]
+        last_name = master_dict[item[0]][info["lastname"]]
+        final_str = "{:.3f} {} {} {}" .format(
+        computed_statistics, connecter, first_name, last_name)
+        list_of_strings.append(final_str)
+
+    return list_of_strings
+    
 
 def compute_top_stats_year(info, formula, numplayers, year):
     """
@@ -234,25 +201,52 @@ def compute_top_stats_year(info, formula, numplayers, year):
       Returns a list of strings for the top numplayers in the given year
       according to the given formula.
     """
-    return []
 
+    bat_list = read_csv_as_list_dict(info["battingfile"], info["separator"], info["quote"])
+    bat_list_by_year = filter_by_year(bat_list, year, info["yearid"])
+
+    # find the top players by id in that year
+    top_playerid_by_year = top_player_ids(info, bat_list_by_year, formula, numplayers)
+
+    # find the top players by name in that year
+    top_playername_by_year = lookup_player_names(info, top_playerid_by_year)
+
+    return top_playername_by_year
+    
+    
+    
 
 ##
 ## Part 2: Functions to compute top batting statistics by career
 ##
 
+  
 def aggregate_by_player_id(statistics, playerid, fields):
-    """
-    Inputs:
-      statistics - List of batting statistics dictionaries
-      playerid   - Player ID field name
-      fields     - List of fields to aggregate
-    Output:
-      Returns a nested dictionary whose keys are player IDs and whose values
-      are dictionaries of aggregated stats.  Only the fields from the fields
-      input will be aggregated in the aggregated stats dictionaries.
-    """
-    return {}
+  """
+  Inputs:
+    statistics - List of batting statistics dictionaries
+    playerid   - Player ID field name
+    fields     - List of fields to aggregate
+  Output:
+    Returns a nested dictionary whose keys are player IDs and whose values
+    are dictionaries of aggregated stats.  Only the fields from the fields
+    input will be aggregated in the aggregated stats dictionaries.
+  """
+  aggregate_statistics = {}
+
+  for row_stat in statistics:
+      if aggregate_statistics.get(row_stat[playerid]) is None:
+          mini_stats = {}
+          mini_stats[playerid] = row_stat[playerid]
+          for a_field in fields:
+              mini_stats[a_field] = int(row_stat[a_field])
+          
+          aggregate_statistics[row_stat[playerid]] = mini_stats
+      else:
+          for a_field in fields:
+              aggregate_statistics[row_stat[playerid]][a_field] += int(row_stat[a_field])
+
+  return aggregate_statistics
 
 
 def compute_top_stats_career(info, formula, numplayers):
@@ -264,7 +258,18 @@ def compute_top_stats_career(info, formula, numplayers):
                     computes a compound statistic
       numplayers  - Number of top players to return
     """
-    return []
+
+    statistics = read_csv_as_list_dict(
+        info["battingfile"], info["separator"], info["quote"])
+
+    aggregate_statistics = aggregate_by_player_id(
+        statistics, info["playerid"], info["battingfields"])
+
+    top_ids_and_stats = top_player_ids(info, list(
+        aggregate_statistics.values()), formula, numplayers)
+
+    top_player_names = lookup_player_names(info, top_ids_and_stats)
+    return top_player_names
 
 
 ##
@@ -335,6 +340,9 @@ def test_baseball_statistics():
     for player in top_batting_average_career:
         print(player)
     print("")
+
+
+
 
 
 # Make sure the following call to test_baseball_statistics is

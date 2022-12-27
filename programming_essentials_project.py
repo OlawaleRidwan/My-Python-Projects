@@ -14,7 +14,10 @@ def days_in_month(year, month):
 
     
     first_of_given_month = datetime.date(year, month, 1)
-    first_of_next_month = datetime.date(year, month+1, 1)
+    if (month == 12 ):  
+        first_of_next_month = datetime.date(year+1, 1, 1)
+    else:
+        first_of_next_month = datetime.date(year, month+1, 1)
     days_interval = first_of_next_month - first_of_given_month
     
     return days_interval.days
@@ -36,7 +39,7 @@ def is_valid_date(year, month, day):
     if( ( datetime.MINYEAR <= year <= datetime.MAXYEAR) and ( 0 < month <= 12) and ( 1 <= day <= (days_in_month(year,month)) )):
         return True
     else:
-         return False
+        return False
 
 
 
